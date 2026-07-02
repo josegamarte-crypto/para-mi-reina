@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Amor 🤍</title>
+    <style>
+        /* Fuentes */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Montserrat:wght@300;400;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #000;
+            font-family: 'Montserrat', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- EFECTO TÚNEL DE CORAZONES EN MOVIMIENTO INFINITO --- */
+        .tunnel-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .heart-tunnel {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: transparent;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Creación del corazón mediante SVG para perfecta nitidez y brillo neón */
+        .heart-tunnel::before {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff007f' stroke-width='1.5'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: drop-shadow(0 0 8px #ff007f) drop-shadow(0 0 20px #ff007f);
+            animation: moveTunnel 6s linear infinite;
+            opacity: 0;
+        }
+
+        /* Desfases de tiempo para crear el efecto visual de profundidad continua */
+        .heart-tunnel:nth-child(1)::before {
+            animation-delay: 0s;
+        }
+
+        .heart-tunnel:nth-child(2)::before {
+            animation-delay: 1.5s;
+        }
+
+        .heart-tunnel:nth-child(3)::before {
+            animation-delay: 3s;
+        }
+
+        .heart-tunnel:nth-child(4)::before {
+            animation-delay: 4.5s;
+        }
+
+        @keyframes moveTunnel {
+            0% {
+                transform: scale(0.1);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(3.5);
+                opacity: 0;
+            }
+        }
+
+        /* --- INTERFAZ DE USUARIO --- */
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 900px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Botón de inicio con efecto Neón */
+        .neon-btn {
+            background: transparent;
+            color: #ff007f;
+            border: 3px solid #ff007f;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.4);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .neon-btn:hover {
+            color: #fff;
+            background: #ff007f;
+            box-shadow: 0 0 35px #ff007f, 0 0 60px #ff007f;
+            transform: scale(1.05);
+        }
+
+        /* Contenedor de la Carta (Oculto al inicio) */
+        .letter-card {
+            background-color: rgba(10, 10, 10, 0.85);
+            border: 2px solid rgba(255, 0, 127, 0.5);
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 100%;
+            box-shadow: 0 0 30px rgba(255, 0, 127, 0.2);
+            backdrop-filter: blur(8px);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+            display: none;
+        }
+
+        .letter-card.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .letter-card h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #ff007f;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px rgba(255, 0, 127, 0.6);
+        }
+
+        /* ESPACIO EN BLANCO RESPONSIVO PARA TU TEXTO */
+        .text-space {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            text-align: center;
+            color: #f0f0f0;
+            white-space: pre-wrap;
+            /* Respeta los párrafos y saltos de línea exactos */
+            margin-bottom: 20px;
+        }
+
+        .footer-heart {
+            color: #ff007f;
+            font-size: 1.5rem;
+            margin-top: 25px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <audio id="bg-music" src="frou frou - A New Kind Of Love.mp3" loop></audio>
+
+    <div class="tunnel-container">
+        <div class="heart-tunnel"></div>
+        <div class="heart-tunnel"></div>
+        <div class="heart-tunnel"></div>
+        <div class="heart-tunnel"></div>
+    </div>
+
+    <div class="content-wrapper">
+
+        <button id="start-btn" class="neon-btn" onclick="openLetter()">Para ti</button>
+
+        <div id="card" class="letter-card">
+            <h1>Para mi reina</h1>
+
+            <div class="text-space">
+                Hola amor, esta carta la escribo con el fin de hacerte saber que te amo, realmente me gusta esta cancion
+                porque habla de como un amor en tiempos modernos se pierden en la rutina, que buscan la excusa de que
+                estaban ocupados pero tambien nos habla de que podemos experimentar un nuevo tipo de amor que no
+                habiamos experimentado, algo geneticamente modificado porque ahora no somos quienes eramos cuando no nos
+                conociamos, lo que me refiero es que eres la razon de mi crecimiento me alegra ser el hombre que se esta
+                formando gracias a ti y no cambiaria el como eres para nada, te amo tal y como eres amor, siento algo de
+                miedo aveces porque realmente nunca habia crecido tanto con alguien como lo habia hecho contigo pero me
+                gusta mucho amor, me gusta que cada dia nuestro amor sea mas grande, no digo que crezca enormemente cada
+                dia, pero cada dia si te he amado un poco mas y amarnos un poco mas cada dia es suficiente. Te amo mi
+                jonhmar
+            </div>
+
+            <div class="footer-heart">❤</div>
+        </div>
+
+    </div>
+
+    <script>
+        function openLetter() {
+            // 1. Iniciar la reproducción del archivo MP3 local
+            const music = document.getElementById('bg-music');
+            music.play().catch(error => {
+                console.log("Audio bloqueado temporalmente por restricciones del navegador: ", error);
+            });
+
+            // 2. Ocultar el botón de neón con una transición limpia
+            const btn = document.getElementById('start-btn');
+            btn.style.display = 'none';
+
+            // 3. Desplegar la carta con animación fluida
+            const card = document.getElementById('card');
+            card.style.display = 'block';
+            setTimeout(() => {
+                card.classList.add('show');
+            }, 50);
+        }
+    </script>
+</body>
+
+</html>
