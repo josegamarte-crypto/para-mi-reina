@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,8 +22,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto; /* Permite scroll si la pantalla es muy pequeña */
             position: relative;
+            padding: 20px 10px;
         }
 
         /* --- EFECTO TÚNEL DE CORAZONES EN MOVIMIENTO INFINITO --- */
@@ -52,7 +53,6 @@
             align-items: center;
         }
 
-        /* Creación del corazón mediante SVG para perfecta nitidez y brillo neón */
         .heart-tunnel::before {
             content: "";
             position: absolute;
@@ -67,37 +67,22 @@
             opacity: 0;
         }
 
-        /* Desfases de tiempo para crear el efecto visual de profundidad continua */
-        .heart-tunnel:nth-child(1)::before {
-            animation-delay: 0s;
-        }
-
-        .heart-tunnel:nth-child(2)::before {
-            animation-delay: 1.5s;
-        }
-
-        .heart-tunnel:nth-child(3)::before {
-            animation-delay: 3s;
-        }
-
-        .heart-tunnel:nth-child(4)::before {
-            animation-delay: 4.5s;
-        }
+        .heart-tunnel:nth-child(1)::before { animation-delay: 0s; }
+        .heart-tunnel:nth-child(2)::before { animation-delay: 1.5s; }
+        .heart-tunnel:nth-child(3)::before { animation-delay: 3s; }
+        .heart-tunnel:nth-child(4)::before { animation-delay: 4.5s; }
 
         @keyframes moveTunnel {
             0% {
                 transform: scale(0.1);
                 opacity: 0;
             }
-
             10% {
                 opacity: 1;
             }
-
             90% {
                 opacity: 0.8;
             }
-
             100% {
                 transform: scale(3.5);
                 opacity: 0;
@@ -108,9 +93,9 @@
         .content-wrapper {
             position: relative;
             z-index: 2;
-            width: 90%;
+            width: 95%;
             max-width: 900px;
-            padding: 20px;
+            padding: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -140,12 +125,12 @@
             transform: scale(1.05);
         }
 
-        /* Contenedor de la Carta (Oculto al inicio) */
+        /* Contenedor de la Carta */
         .letter-card {
-            background-color: rgba(10, 10, 10, 0.85);
+            background-color: rgba(10, 10, 10, 0.88);
             border: 2px solid rgba(255, 0, 127, 0.5);
             border-radius: 20px;
-            padding: 40px 30px;
+            padding: 30px 20px;
             width: 100%;
             box-shadow: 0 0 30px rgba(255, 0, 127, 0.2);
             backdrop-filter: blur(8px);
@@ -164,50 +149,49 @@
 
         .letter-card h1 {
             font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             color: #ff007f;
             margin-bottom: 25px;
             text-shadow: 0 0 10px rgba(255, 0, 127, 0.6);
         }
 
-        /* ESPACIO EN BLANCO RESPONSIVO PARA TU TEXTO */
+        /* ESPACIO DE TEXTO OPTIMIZADO PARA MÓVILES (MÁS PEQUEÑO Y COMPACTO) */
         .text-space {
-            font-size: 1.15rem;
-            line-height: 1.9;
+            font-size: 0.95rem; /* Letra más pequeña para que quepa en cualquier pantalla */
+            line-height: 1.6;  /* Espaciado más unido para evitar que se desborde hacia abajo */
             text-align: center;
             color: #f0f0f0;
-            white-space: pre-wrap;
-            /* Respeta los párrafos y saltos de línea exactos */
-            margin-bottom: 20px;
+            white-space: pre-wrap; 
+            margin-bottom: 15px;
+            padding: 0 10px;
         }
 
         .footer-heart {
             color: #ff007f;
-            font-size: 1.5rem;
-            margin-top: 25px;
+            font-size: 1.3rem;
+            margin-top: 20px;
             animation: pulse 1.5s infinite;
         }
 
         @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
 
-            50% {
-                transform: scale(1.2);
-            }
-
-            100% {
-                transform: scale(1);
-            }
+        /* Ajustes extra pequeños para pantallas mini */
+        @media (max-width: 400px) {
+            .letter-card h1 { font-size: 2.6rem; }
+            .text-space { font-size: 0.88rem; line-height: 1.5; }
         }
     </style>
 </head>
-
 <body>
 
+    <!-- Elemento de Audio Local Vinculado Exactamente con tu Canción -->
     <audio id="bg-music" src="frou frou - A New Kind Of Love.mp3" loop></audio>
 
+    <!-- Fondo del Túnel de Corazones -->
     <div class="tunnel-container">
         <div class="heart-tunnel"></div>
         <div class="heart-tunnel"></div>
@@ -215,24 +199,17 @@
         <div class="heart-tunnel"></div>
     </div>
 
+    <!-- Contenido del Proyecto -->
     <div class="content-wrapper">
-
+        
+        <!-- Botón Inicial -->
         <button id="start-btn" class="neon-btn" onclick="openLetter()">Para ti</button>
 
+        <!-- Tarjeta de la Carta -->
         <div id="card" class="letter-card">
             <h1>Para mi reina</h1>
-
-            <div class="text-space">
-Hola amor, esta carta la escribo con el fin de hacerte saber que te amo, realmente me gusta esta cancion
-porque habla de como un amor en tiempos modernos se pierden en la rutina, que buscan la excusa de que
-estaban ocupados pero tambien nos habla de que podemos experimentar un nuevo tipo de amor que no
-habiamos experimentado, algo geneticamente modificado porque ahora no somos quienes eramos cuando no nos
-conociamos, lo que me refiero es que eres la razon de mi crecimiento me alegra ser el hombre que se esta
-formando gracias a ti y no cambiaria el como eres para nada, te amo tal y como eres amor, siento algo de
-miedo aveces porque realmente nunca habia crecido tanto con alguien como lo habia hecho contigo pero me
-gusta mucho amor, me gusta que cada dia nuestro amor sea mas grande, no digo que crezca enormemente cada
-dia, pero cada dia si te he amado un poco mas y amarnos un poco mas cada dia es suficiente. Te amo mi jonhmar
-            </div>
+            
+            <div class="text-space">Hola amor, esta carta la escribo con el fin de hacerte saber que te amo, realmente me gusta esta cancion porque habla de como un amor en tiempos modernos se pierden en la rutina, que buscan la excusa de que estaban ocupados pero tambien nos habla de que podemos experimentar un nuevo tipo de amor que no habiamos experimentado, algo geneticamente modificado porque ahora no somos quienes eramos cuando no nos conociamos, lo que me refiero es que eres la razon de mi crecimiento me alegra ser el hombre que se esta formando gracias a ti y no cambiaria el como eres para nada, te amo tal y como eres amor, siento algo de miedo aveces porque realmente nunca habia crecido tanto con alguien como lo habia hecho contigo pero me gusta mucho amor, me gusta que cada dia nuestro amor sea mas grande, no digo que crezca enormemente cada dia, pero cada dia si te he amado un poco mas y amarnos un poco mas cada dia es suficiente. Te amo mi jonhmar.</div>
 
             <div class="footer-heart">❤</div>
         </div>
@@ -241,17 +218,14 @@ dia, pero cada dia si te he amado un poco mas y amarnos un poco mas cada dia es 
 
     <script>
         function openLetter() {
-            // 1. Iniciar la reproducción del archivo MP3 local
             const music = document.getElementById('bg-music');
             music.play().catch(error => {
-                console.log("Audio bloqueado temporalmente por restricciones del navegador: ", error);
+                console.log("Audio bloqueado temporalmente: ", error);
             });
 
-            // 2. Ocultar el botón de neón con una transición limpia
             const btn = document.getElementById('start-btn');
             btn.style.display = 'none';
 
-            // 3. Desplegar la carta con animación fluida
             const card = document.getElementById('card');
             card.style.display = 'block';
             setTimeout(() => {
@@ -260,5 +234,4 @@ dia, pero cada dia si te he amado un poco mas y amarnos un poco mas cada dia es 
         }
     </script>
 </body>
-
 </html>
